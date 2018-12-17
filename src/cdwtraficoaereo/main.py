@@ -1,5 +1,6 @@
 import sys
 from cdwtraficoaereo.factories import PipelineFactory
+from cdwtraficoaereo.components.sources import SourceVault
 from cdwtraficoaereo.cfg.constants import FilePathConstants
 
 
@@ -7,31 +8,11 @@ def run_application(argv):
 
     pipeline = PipelineFactory.build()
 
-    sources = [
-        {
-            "path": FilePathConstants.RAW_DATA_FOLDER + "/airlines.dat"
-            , "type": "csv"
-            , "name": "airlines"
-            , "args":
-            {
-                "header": False
-            }
-        },
-        {
-            "path": FilePathConstants.RAW_DATA_FOLDER + "/equipamientos.js"
-            , "type": "json"
-            , "name": "equipment"
-            , "args": {}
-        },
-        {
-            "path": FilePathConstants.RAW_DATA_FOLDER + "/paises.xml"
-            , "type": "xml"
-            , "name": "countries"
-            , "args": {"row_tag": "row"}
-        }
-    ]
+    SourceVault.build_from_arguments(argv)
 
-    pipeline.run_etl_pipeline(sources=sources)
+    sources_list = SourceVault().get_sources_list()
+
+    pipeline.run_etl_pipeline(sources=sources_list)
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 import logging
 
 from cdwtraficoaereo.fw import PipelineRunner
-from cdwtraficoaereo.factories import DataLoaderFactory
+from cdwtraficoaereo.factories import DataLoaderFactory, SourceProcessorFactory
 from cdwtraficoaereo.helpers.spark import SparkSessionFactory
 from cdwtraficoaereo.helpers.database import DatabaseManager
 
@@ -15,16 +15,18 @@ class EtlPipelineRunner(PipelineRunner):
         spark = self._initialize_engine()
 
         sources_raw_data = {}
+        sources_processed_data = {}
         for source in sources:
-            source_name = source["name"]
-            source_type = source["type"]
-            source_path = source["path"]
-            source_args = source["args"]
 
-            loader = DataLoaderFactory.build(source_type)
+            loader = DataLoaderFactory.build(source.type)
+            raw_data = loader.load_data(spark, source.path, **source.args)
 
-            raw_data = loader.load_data(spark, source_path, **source_args)
-            sources_raw_data[source_name] = raw_data
+            sources_raw_data[source.name] = raw_data
+
+            source_processor = SourceProcessorFactory().build(source)
+            processed_data = source_processor.process(raw_data)
+
+            sources_processed_data[source.name] = processed_data
 
     @staticmethod
     def _initialize_engine():
@@ -37,7 +39,6 @@ class EtlPipelineRunner(PipelineRunner):
         except Exception as e:
             log.error(e)
 
-            log.info("Creating database...")
             DatabaseManager.create_database(spark)
 
             DatabaseManager.use_database(spark)

@@ -10,7 +10,9 @@ class DatabaseManager:
     @staticmethod
     def create_database(spark: SparkSession, database_name=DatabaseConstants.DATABASE_NAME):
         try:
+            log.info("Creating database {}...".format(database_name))
             spark.sql("CREATE DATABASE IF NOT EXISTS {}".format(database_name))
+            
         except Exception as e:
             log.error(e)
 

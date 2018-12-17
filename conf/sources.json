@@ -1,0 +1,100 @@
+[
+  {
+    "path": "/Users/diegoserrano/prj/uoc/cdw/caso_practico1/PRA1-Datos/paises.xml",
+    "type": "xml",
+    "name": "countries",
+    "args": {
+      "row_tag": "row",
+      "colnames": [
+        "cod_continente",
+        "cod_pais",
+        "cod_pais2",
+        "continente",
+        "pais",
+        "latitud",
+        "longitud"
+      ]
+    }
+  },
+  {
+    "path": "/Users/diegoserrano/prj/uoc/cdw/caso_practico1/PRA1-Datos/equipamientos.js",
+    "type": "json",
+    "name": "equipment",
+    "args": {}
+  },
+  {
+    "path": "/Users/diegoserrano/prj/uoc/cdw/caso_practico1/PRA1-Datos/airlines.dat",
+    "type": "csv",
+    "name": "airlines",
+    "args": {
+      "header": "False",
+      "impute": "\\N",
+      "colnames": [
+        "openfligths_ID",
+        "nombre",
+        "alias",
+        "codigo_IATA",
+        "codigo_ICAO",
+        "callsign",
+        "pais",
+        "activo"
+      ]
+    }
+  },
+  {
+    "path": "/Users/diegoserrano/prj/uoc/cdw/caso_practico1/PRA1-Datos/airports.dat",
+    "type": "csv",
+    "name": "airports",
+    "args": {
+      "header": "False",
+      "impute": "\\N",
+      "colnames": [
+        "id_aeropuerto",
+        "nombre_aeropuerto",
+        "ciudad_aeropuerto",
+        "pais",
+        "cod_iata_faa",
+        "cod_icao",
+        "latitud",
+        "longitud",
+        "altitud",
+        "zona_horaria",
+        "dst",
+        "zona_horaria_tz"
+      ]
+    }
+  },
+  {
+    "path": "/Users/diegoserrano/prj/uoc/cdw/caso_practico1/PRA1-Datos/route_type.dat",
+    "type": "csv",
+    "name": "route_type",
+    "args": {
+      "header": "False",
+      "impute": "\\N",
+      "colnames": [
+        "cod_tipo_ruta",
+        "desc_tipo_ruta"
+      ]
+    }
+  },
+  {
+    "path": "/Users/diegoserrano/prj/uoc/cdw/caso_practico1/PRA1-Datos/routes.dat",
+    "type": "csv",
+    "name": "routes",
+    "args": {
+      "header": "False",
+      "impute": "\\N",
+      "colnames": [
+        "codigo_aerolinea",
+        "id_aerolinea",
+        "cod_aeropuerto_origen",
+        "id_aeropuerto_origen",
+        "cod_aeropuerto_destino",
+        "id_aeropuerto_destino",
+        "id_codeshare",
+        "num_stops",
+        "equipamiento"
+      ]
+    }
+  }
+]

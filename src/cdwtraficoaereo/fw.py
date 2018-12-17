@@ -21,3 +21,19 @@ class Factory(ABC):
     @abstractmethod
     def build():
         pass
+
+
+class SourceProcessor(ABC):
+
+    SOURCE = None
+
+    def set_source(self, source):
+        self.SOURCE = source
+
+    @property
+    def source(self):
+        return self.SOURCE
+
+    @abstractmethod
+    def process(self, raw_df, *args):
+        pass

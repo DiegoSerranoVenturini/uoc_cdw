@@ -1,5 +1,5 @@
-from cdwtraficoaereo.cfg.constants import InputFileTypes
-from cdwtraficoaereo.fw import Factory
+from cdwtraficoaereo.cfg.constants import InputFileTypes, SourceNames
+from cdwtraficoaereo.fw import Factory, SourceProcessor
 
 
 class UniversalFactory(Factory):
@@ -34,3 +34,29 @@ class PipelineFactory(UniversalFactory):
         from cdwtraficoaereo.pipeline.run import EtlPipelineRunner
 
         return EtlPipelineRunner()
+
+
+class SourceProcessorFactory(UniversalFactory):
+
+    @staticmethod
+    def build(source) -> SourceProcessor:
+
+        from cdwtraficoaereo.components.sources import CountriesSourceProcessor, AirlinesSourceProcessor, UniversalSourceProcessor, \
+            EquipmentSourceProcessor, AirportsSourceProcessor, RoutesSourceProcessor
+
+        processor = {
+             SourceNames.AIRLINES: AirlinesSourceProcessor(),
+             SourceNames.AIRPORTS: AirportsSourceProcessor(),
+             SourceNames.ROUTES: RoutesSourceProcessor(),
+             SourceNames.ROUTE_TYPE: UniversalSourceProcessor(),
+             SourceNames.EQUIPMENT: EquipmentSourceProcessor(),
+             SourceNames.COUNTRIES: CountriesSourceProcessor(),
+             SourceNames.PASS_COUNTRY: None,
+             SourceNames.COM_COUNTRY: None,
+             SourceNames.POP_COUNTRY: None,
+             SourceNames.TOUR_COUNTRY: None,
+        }[source.name]
+
+        processor.set_source(source)
+
+        return processor
